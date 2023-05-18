@@ -1,37 +1,26 @@
+def solve(arr):
+    ## 가로 탐색
+    for lst in arr:
+        if len(set(lst)) != 9:
+            return 0
+    ## 세로 줄 탐색
+    line = list(zip(*arr))
+    for lst in line:
+        if len(set(lst)) != 9:
+            return 0
+    ## 3*3 직사각형 탐색
+    for i in range(0, 9, 3):
+        for j in range(0, 9, 3):
+            lst = arr[i][j:j + 3] + arr[i + 1][j:j + 3] + arr[i + 2][j:j + 3]
+            if len(set(lst)) != 9:
+                return 0
+    return 1
+
+
 T = int(input())
 for time in range(1, T + 1):
-    result = 0
-    sodo = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-    temp = []
     arr = [list(map(int, input().split())) for _ in range(9)]
 
-    for k in range(0, 9, 3):
-        for p in range(0,9,3):
-            for i in range(3):
-                for j in range(3):
-                    temp.append(arr[i+k][j+p])
-            temp.sort()
-            if sodo == temp:
-                result+=1
-            temp =[]
-
-    for i in range(9):
-        for j in range(9):
-            temp.append(arr[i][j])
-        temp.sort()
-        if sodo == temp:
-            result += 1
-        temp = []
-    for i in range(9):
-        for j in range(9):
-            temp.append(arr[j][i])
-        temp.sort()
-        if sodo == temp:
-            result += 1
-        temp = []
-    if result == 27:
-        result = 1
-    else :
-        result = 0
+    result = solve(arr)
 
     print("#" + str(time) + " " + str(result))
