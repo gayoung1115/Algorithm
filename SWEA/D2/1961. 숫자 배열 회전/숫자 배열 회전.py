@@ -1,30 +1,21 @@
-# 1961. 숫자 배열 회전
-
-def degree(test):
-    deg = [N * [0] for _ in range(N)]
+def rotate(space):
+    result_sp = [[0]*N for _ in range(N)]
     for i in range(N):
         for j in range(N):
-            deg[i][j] = test[N - 1 - j][i]
-            #arr[i][j] = arr[][]의 규칙성 파악하기
-    return deg
+            result_sp[i][j] = space[N-j-1][i]
+    return result_sp
 
 T = int(input())
 for time in range(1, T + 1):
-    result = []
-    temp = []
     N = int(input())
-    arr = [list(map(str, input().split())) for _ in range(N)]
+    space = [list(map(int,input().split())) for _ in range(N)]
+    space1 = rotate(space)
+    space2 = rotate(space1)
+    space3 = rotate(space2)
+    print("#" + str(time))
+    for i in range(N):
+        print(''.join(str(s) for s in space1[i]),end=" ")
+        print(''.join(str(s) for s in space2[i]),end=" ")
+        print(''.join(str(s) for s in space3[i]),end=" ")
+        print()
 
-    # 90도
-    arr_90 = degree(arr)
-    #180도
-    arr_180 = degree(arr_90)
-    #270도
-    arr_270 = degree(arr_180)
-
-    print(f'#{time}')
-    for a,b,c in zip(arr_90,arr_180,arr_270):
-        a1 = ''.join(map(str,a))
-        b1 = ''.join(b)
-        c1 = ''.join(c)
-        print(a1, b1, c1)
