@@ -1,26 +1,38 @@
-def solve(arr):
-    ## 가로 탐색
-    for lst in arr:
-        if len(set(lst)) != 9:
-            return 0
-    ## 세로 줄 탐색
-    line = list(zip(*arr))
-    for lst in line:
-        if len(set(lst)) != 9:
-            return 0
-    ## 3*3 직사각형 탐색
-    for i in range(0, 9, 3):
-        for j in range(0, 9, 3):
-            lst = arr[i][j:j + 3] + arr[i + 1][j:j + 3] + arr[i + 2][j:j + 3]
-            if len(set(lst)) != 9:
-                return 0
-    return 1
-
-
 T = int(input())
-for time in range(1, T + 1):
-    arr = [list(map(int, input().split())) for _ in range(9)]
+for test_case in range(1, T + 1):
+    result = -1
+    arr = [list(map(int,input().split())) for _ in range(9)]
+    sudo = []
 
-    result = solve(arr)
+    # 가로 검증
+    for x in range(9):
+        for y in range(9):
+            sudo.append(arr[x][0+y])
+        if len(set(sudo)) == 9:
+            sudo = []
+        else :
+            result = 0
+            break
+    if result != 0:
+        # 새로 검증
+        for x in range(9):
+            for y in range(9):
+                sudo.append(arr[0+y][x])
+            if len(set(sudo)) == 9:
+                sudo = []
+            else :
+                result = 0
+                break
+    if result != 0:
+        for x in range(0,9,3):
+            for y in range(0,6,9):
+                sudo = arr[x][y:y+3]+arr[x+1][y:y+3]+arr[x+2][y:y+3]
+            if len(set(sudo)) == 9:
+                sudo = []
+            else :
+                result = 0
+                break
 
-    print("#" + str(time) + " " + str(result))
+    if result == -1: result = 1
+
+    print(f'#{test_case}',result)
